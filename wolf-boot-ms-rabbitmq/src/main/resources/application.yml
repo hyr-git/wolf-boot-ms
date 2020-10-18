@@ -1,0 +1,14 @@
+spring:
+    application:
+        name: wolf-boot-mq
+    rabbitmq:
+      host: 127.0.0.1
+      port: 5672
+      password: enjoy
+      username: enjoy
+    #http:
+     # encoding:
+    #    force: true
+    #    charset: UTF-8
+#server:
+#  port: 9898
