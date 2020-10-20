@@ -13,14 +13,10 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.mlj.rabbitmq.mq.config.DirectRabbitConfig;
-import com.mlj.ws.utils.SpringContextUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,7 +40,6 @@ public class WebSocketServer {
     private String userId="";
     
     
-    @Autowired
     private RabbitTemplate rabbitTemplate;
     
 
@@ -126,22 +121,23 @@ public class WebSocketServer {
         log.error("用户错误:"+this.userId+",原因:"+error.getMessage());
         error.printStackTrace();
     }
+    
     /**
      * 实现服务器主动推送
      */
     public void sendMQMessage(String message) throws IOException {
-    	rabbitTemplate = SpringContextUtils.getBean(RabbitTemplate.class);
+    	/*rabbitTemplate = SpringContextUtils.getBean(RabbitTemplate.class);
     	this.rabbitTemplate.convertAndSend(DirectRabbitConfig.DIRECT_QUEUE_NAME,message);
-
+*/
     	//TODO 通过具体mq进行订阅方式进行广播
-        //this.session.getBasicRemote().sendText(message);
+        this.session.getBasicRemote().sendText(message);
     }
 
 
     /**
      * 发送自定义消息
      * */
-    public static void sendInfo(String message,@PathParam("userId") String userId) throws IOException {
+    public static void sendInfoByUserId(String message,@PathParam("userId") String userId) throws IOException {
         log.info("发送消息到:"+userId+"，报文:"+message);
         if(StringUtils.isNotBlank(userId)&&webSocketMap.containsKey(userId)){
             webSocketMap.get(userId).sendMQMessage(message);
