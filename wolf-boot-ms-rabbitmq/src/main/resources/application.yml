@@ -6,9 +6,15 @@ spring:
       port: 5672
       password: enjoy
       username: enjoy
-    #http:
-     # encoding:
-    #    force: true
-    #    charset: UTF-8
-#server:
-#  port: 9898
+      listener:
+        simple:
+          retry:
+            enabled: true #开启消费者重试机制
+            max-attempts: 5 #最大重试次数
+            initial-interval: 3000 #重试时间间隔
+    http:
+      encoding:
+        force: true
+        charset: UTF-8
+server:
+  port: 9898

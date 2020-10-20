@@ -6,7 +6,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mlj.rabbitmq.mq.config.DirectRabbitConfig;
+import com.mlj.common.mq.config.DirectRabbitConfig;
 
 import lombok.extern.slf4j.Slf4j;
 
